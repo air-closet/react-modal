@@ -7,7 +7,7 @@
 		exports["ReactModal"] = factory(require("react"), require("react-dom"));
 	else
 		root["ReactModal"] = factory(root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_12__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -86,19 +86,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(3);
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _reactDom = __webpack_require__(12);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _exenv = __webpack_require__(4);
+	var _exenv = __webpack_require__(13);
 
 	var _exenv2 = _interopRequireDefault(_exenv);
 
-	var _elementClass = __webpack_require__(5);
+	var _elementClass = __webpack_require__(14);
 
 	var _elementClass2 = _interopRequireDefault(_elementClass);
 
-	var _ModalPortal = __webpack_require__(6);
+	var _ModalPortal = __webpack_require__(15);
 
 	var _ModalPortal2 = _interopRequireDefault(_ModalPortal);
 
@@ -212,22 +216,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react.Component);
 
 	Modal.propTypes = {
-	  isOpen: _react2.default.PropTypes.bool.isRequired,
-	  style: _react2.default.PropTypes.shape({
-	    content: _react2.default.PropTypes.object,
-	    overlay: _react2.default.PropTypes.object
+	  isOpen: _propTypes2.default.bool.isRequired,
+	  style: _propTypes2.default.shape({
+	    content: _propTypes2.default.object,
+	    overlay: _propTypes2.default.object
 	  }),
-	  portalClassName: _react2.default.PropTypes.string,
-	  appElement: _react2.default.PropTypes.instanceOf(SafeHTMLElement),
-	  onBeforeOpen: _react2.default.PropTypes.func,
-	  onAfterOpen: _react2.default.PropTypes.func,
-	  onRequestClose: _react2.default.PropTypes.func,
-	  closeTimeoutMS: _react2.default.PropTypes.number,
-	  ariaHideApp: _react2.default.PropTypes.bool,
-	  shouldCloseOnOverlayClick: _react2.default.PropTypes.bool,
-	  parentSelector: _react2.default.PropTypes.func,
-	  role: _react2.default.PropTypes.string,
-	  contentLabel: _react2.default.PropTypes.string.isRequired
+	  portalClassName: _propTypes2.default.string,
+	  appElement: _propTypes2.default.instanceOf(SafeHTMLElement),
+	  onBeforeOpen: _propTypes2.default.func,
+	  onAfterOpen: _propTypes2.default.func,
+	  onRequestClose: _propTypes2.default.func,
+	  closeTimeoutMS: _propTypes2.default.number,
+	  ariaHideApp: _propTypes2.default.bool,
+	  shouldCloseOnOverlayClick: _propTypes2.default.bool,
+	  parentSelector: _propTypes2.default.func,
+	  role: _propTypes2.default.string,
+	  contentLabel: _propTypes2.default.string.isRequired
 	};
 	Modal.defaultProps = {
 	  isOpen: false,
@@ -273,427 +277,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2015 Jed Watson.
-	  Based on code that is Copyright 2013-2015, Facebook, Inc.
-	  All rights reserved.
-	*/
-
-	(function () {
-		'use strict';
-
-		var canUseDOM = !!(
-			typeof window !== 'undefined' &&
-			window.document &&
-			window.document.createElement
-		);
-
-		var ExecutionEnvironment = {
-
-			canUseDOM: canUseDOM,
-
-			canUseWorkers: typeof Worker !== 'undefined',
-
-			canUseEventListeners:
-				canUseDOM && !!(window.addEventListener || window.attachEvent),
-
-			canUseViewport: canUseDOM && !!window.screen
-
-		};
-
-		if (true) {
-			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return ExecutionEnvironment;
-			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else if (typeof module !== 'undefined' && module.exports) {
-			module.exports = ExecutionEnvironment;
-		} else {
-			window.ExecutionEnvironment = ExecutionEnvironment;
-		}
-
-	}());
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-	module.exports = function(opts) {
-	  return new ElementClass(opts)
-	}
-
-	function indexOf(arr, prop) {
-	  if (arr.indexOf) return arr.indexOf(prop)
-	  for (var i = 0, len = arr.length; i < len; i++)
-	    if (arr[i] === prop) return i
-	  return -1
-	}
-
-	function ElementClass(opts) {
-	  if (!(this instanceof ElementClass)) return new ElementClass(opts)
-	  var self = this
-	  if (!opts) opts = {}
-
-	  // similar doing instanceof HTMLElement but works in IE8
-	  if (opts.nodeType) opts = {el: opts}
-
-	  this.opts = opts
-	  this.el = opts.el || document.body
-	  if (typeof this.el !== 'object') this.el = document.querySelector(this.el)
-	}
-
-	ElementClass.prototype.add = function(className) {
-	  var el = this.el
-	  if (!el) return
-	  if (el.className === "") return el.className = className
-	  var classes = el.className.split(' ')
-	  if (indexOf(classes, className) > -1) return classes
-	  classes.push(className)
-	  el.className = classes.join(' ')
-	  return classes
-	}
-
-	ElementClass.prototype.remove = function(className) {
-	  var el = this.el
-	  if (!el) return
-	  if (el.className === "") return
-	  var classes = el.className.split(' ')
-	  var idx = indexOf(classes, className)
-	  if (idx > -1) classes.splice(idx, 1)
-	  el.className = classes.join(' ')
-	  return classes
-	}
-
-	ElementClass.prototype.has = function(className) {
-	  var el = this.el
-	  if (!el) return
-	  var classes = el.className.split(' ')
-	  return indexOf(classes, className) > -1
-	}
-
-	ElementClass.prototype.toggle = function(className) {
-	  var el = this.el
-	  if (!el) return
-	  if (this.has(className)) this.remove(className)
-	  else this.add(className)
-	}
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _propTypes = __webpack_require__(7);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _lodash = __webpack_require__(16);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var _scopeTab = __webpack_require__(17);
-
-	var _scopeTab2 = _interopRequireDefault(_scopeTab);
-
-	var _focusManager = __webpack_require__(19);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// so that our CSS is statically analyzable
-	var CLASS_NAMES = {
-	  overlay: {
-	    base: 'ReactModal__Overlay',
-	    afterOpen: 'ReactModal__Overlay--after-open',
-	    beforeClose: 'ReactModal__Overlay--before-close'
-	  },
-	  content: {
-	    base: 'ReactModal__Content',
-	    afterOpen: 'ReactModal__Content--after-open',
-	    beforeClose: 'ReactModal__Content--before-close'
-	  }
-	};
-
-	var ModalPortal = function (_Component) {
-	  _inherits(ModalPortal, _Component);
-
-	  _createClass(ModalPortal, null, [{
-	    key: 'afterClose',
-	    value: function afterClose() {
-	      (0, _focusManager.returnFocus)();
-	      (0, _focusManager.teardownScopedFocus)();
-	    }
-	  }]);
-
-	  function ModalPortal() {
-	    _classCallCheck(this, ModalPortal);
-
-	    var _this = _possibleConstructorReturn(this, (ModalPortal.__proto__ || Object.getPrototypeOf(ModalPortal)).call(this));
-
-	    _this.closeWithoutTimeout = function () {
-	      _this.setState({
-	        beforeClose: false,
-	        isOpen: false,
-	        afterOpen: false
-	      }, _this.afterClose);
-	    };
-
-	    _this.handleKeyDown = function (event) {
-	      if (event.keyCode === 9 /* tab*/) (0, _scopeTab2.default)(_this.content, event);
-	      if (event.keyCode === 27 /* esc*/) {
-	          event.preventDefault();
-	          _this.requestClose(event);
-	        }
-	    };
-
-	    _this.handleOverlayOnClick = function (event) {
-	      if (_this.shouldClose === null) {
-	        _this.shouldClose = true;
-	      }
-	      if (_this.shouldClose && _this.props.shouldCloseOnOverlayClick) {
-	        if (_this.ownerHandlesClose()) {
-	          _this.requestClose(event);
-	        } else {
-	          _this.focusContent();
-	        }
-	      }
-	      _this.shouldClose = null;
-	    };
-
-	    _this.handleContentOnClick = function () {
-	      _this.shouldClose = false;
-	    };
-
-	    _this.state = {
-	      afterOpen: false,
-	      beforeClose: false
-	    };
-	    _this.shouldClose = null;
-	    return _this;
-	  }
-
-	  _createClass(ModalPortal, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      // Focus needs to be set when mounting and already open
-	      if (this.props.isOpen) {
-	        this.setFocusAfterRender(true);
-	        this.open();
-	      }
-	    }
-	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(newProps) {
-	      // Focus only needs to be set once when the modal is being opened
-	      if (!this.props.isOpen && newProps.isOpen) {
-	        this.setFocusAfterRender(true);
-	        this.open();
-	      } else if (this.props.isOpen && !newProps.isOpen) {
-	        this.close();
-	      }
-	    }
-	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      if (this.focusAfterRender) {
-	        this.focusContent();
-	        this.setFocusAfterRender(false);
-	      }
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      clearTimeout(this.closeTimer);
-	    }
-	  }, {
-	    key: 'setFocusAfterRender',
-	    value: function setFocusAfterRender(focus) {
-	      this.focusAfterRender = focus;
-	    }
-	  }, {
-	    key: 'open',
-	    value: function open() {
-	      var _this2 = this;
-
-	      if (this.state.afterOpen && this.state.beforeClose) {
-	        clearTimeout(this.closeTimer);
-	        this.setState({ beforeClose: false });
-	      } else {
-	        (0, _focusManager.setupScopedFocus)(this.node);
-	        (0, _focusManager.markForFocusLater)();
-	        if (this.props.isOpen && this.props.onBeforeOpen) {
-	          this.props.onBeforeOpen();
-	        }
-	        this.setState({ isOpen: true }, function () {
-	          _this2.setState({ afterOpen: true });
-
-	          if (_this2.props.isOpen && _this2.props.onAfterOpen) {
-	            _this2.props.onAfterOpen();
-	          }
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'close',
-	    value: function close() {
-	      if (this.props.closeTimeoutMS > 0) {
-	        this.closeWithTimeout();
-	      } else {
-	        this.closeWithoutTimeout();
-	      }
-	    }
-	  }, {
-	    key: 'focusContent',
-	    value: function focusContent() {
-	      // Don't steal focus from inner elements
-	      if (!this.contentHasFocus()) {
-	        this.content.focus();
-	      }
-	    }
-	  }, {
-	    key: 'closeWithTimeout',
-	    value: function closeWithTimeout() {
-	      var _this3 = this;
-
-	      this.setState({ beforeClose: true }, function () {
-	        _this3.closeTimer = setTimeout(_this3.closeWithoutTimeout, _this3.props.closeTimeoutMS);
-	      });
-	    }
-	  }, {
-	    key: 'requestClose',
-	    value: function requestClose(event) {
-	      if (this.ownerHandlesClose()) {
-	        this.props.onRequestClose(event);
-	      }
-	    }
-	  }, {
-	    key: 'ownerHandlesClose',
-	    value: function ownerHandlesClose() {
-	      return this.props.onRequestClose;
-	    }
-	  }, {
-	    key: 'shouldBeClosed',
-	    value: function shouldBeClosed() {
-	      return !this.props.isOpen && !this.state.beforeClose;
-	    }
-	  }, {
-	    key: 'contentHasFocus',
-	    value: function contentHasFocus() {
-	      return document.activeElement === this.content || this.content.contains(document.activeElement);
-	    }
-	  }, {
-	    key: 'buildClassName',
-	    value: function buildClassName(which, additional) {
-	      var className = CLASS_NAMES[which].base;
-	      if (this.state.afterOpen) {
-	        className += ' ' + CLASS_NAMES[which].afterOpen;
-	      }
-	      if (this.state.beforeClose) {
-	        className += ' ' + CLASS_NAMES[which].beforeClose;
-	      }
-	      return additional ? className + ' ' + additional : className;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this4 = this;
-
-	      var contentStyles = this.props.className ? {} : this.props.defaultStyles.content;
-	      var overlayStyles = this.props.overlayClassName ? {} : this.props.defaultStyles.overlay;
-
-	      // Disabling this rule is okay, since we know what is going on here, that being said
-	      // longterm we should probably do this better.
-	      /* eslint-disable jsx-a11y/no-static-element-interactions */
-	      return this.shouldBeClosed() ? _react2.default.createElement('div', null) : _react2.default.createElement(
-	        'div',
-	        {
-	          ref: function ref(c) {
-	            _this4.overlay = c;
-	          },
-	          className: this.buildClassName('overlay', this.props.overlayClassName),
-	          style: (0, _lodash2.default)({}, overlayStyles, this.props.style.overlay || {}),
-	          onClick: this.handleOverlayOnClick
-	        },
-	        _react2.default.createElement(
-	          'div',
-	          {
-	            ref: function ref(c) {
-	              _this4.content = c;
-	            },
-	            style: (0, _lodash2.default)({}, contentStyles, this.props.style.content || {}),
-	            className: this.buildClassName('content', this.props.className),
-	            tabIndex: -1,
-	            onKeyDown: this.handleKeyDown,
-	            onClick: this.handleContentOnClick,
-	            role: this.props.role,
-	            'aria-label': this.props.contentLabel
-	          },
-	          this.props.children
-	        )
-	      );
-	      /* eslint-enable jsx-a11y/no-static-element-interactions */
-	    }
-	  }]);
-
-	  return ModalPortal;
-	}(_react.Component);
-
-	ModalPortal.propTypes = {
-	  isOpen: _propTypes2.default.bool.isRequired,
-	  onBeforeOpen: _propTypes2.default.func,
-	  onAfterOpen: _propTypes2.default.func,
-	  closeTimeoutMS: _propTypes2.default.number,
-	  shouldCloseOnOverlayClick: _propTypes2.default.bool,
-	  onRequestClose: _propTypes2.default.func,
-	  className: _propTypes2.default.string,
-	  overlayClassName: _propTypes2.default.string,
-	  defaultStyles: _propTypes2.default.shape({
-	    content: _propTypes2.default.object,
-	    overlay: _propTypes2.default.object
-	  }),
-	  style: _propTypes2.default.shape({
-	    content: _propTypes2.default.object,
-	    overlay: _propTypes2.default.object
-	  }),
-	  role: _propTypes2.default.string,
-	  children: _propTypes2.default.node,
-	  contentLabel: _propTypes2.default.string
-	};
-	ModalPortal.defaultProps = {
-	  style: {
-	    overlay: {},
-	    content: {}
-	  }
-	};
-	exports.default = ModalPortal;
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -718,16 +301,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // By explicitly using `prop-types` you are opting into new development behavior.
 	  // http://fb.me/prop-types-in-prod
 	  var throwOnDirectAccess = true;
-	  module.exports = __webpack_require__(8)(isValidElement, throwOnDirectAccess);
+	  module.exports = __webpack_require__(4)(isValidElement, throwOnDirectAccess);
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(15)();
+	  module.exports = __webpack_require__(11)();
 	}
 
 
 /***/ }),
-/* 8 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -739,13 +322,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(9);
-	var invariant = __webpack_require__(10);
-	var warning = __webpack_require__(11);
-	var assign = __webpack_require__(12);
+	var emptyFunction = __webpack_require__(5);
+	var invariant = __webpack_require__(6);
+	var warning = __webpack_require__(7);
+	var assign = __webpack_require__(8);
 
-	var ReactPropTypesSecret = __webpack_require__(13);
-	var checkPropTypes = __webpack_require__(14);
+	var ReactPropTypesSecret = __webpack_require__(9);
+	var checkPropTypes = __webpack_require__(10);
 
 	module.exports = function(isValidElement, throwOnDirectAccess) {
 	  /* global Symbol */
@@ -1275,7 +858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 9 */
+/* 5 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1316,7 +899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = emptyFunction;
 
 /***/ }),
-/* 10 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -1374,7 +957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = invariant;
 
 /***/ }),
-/* 11 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -1387,7 +970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(9);
+	var emptyFunction = __webpack_require__(5);
 
 	/**
 	 * Similar to invariant but only logs a warning if the condition is not met.
@@ -1441,7 +1024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = warning;
 
 /***/ }),
-/* 12 */
+/* 8 */
 /***/ (function(module, exports) {
 
 	/*
@@ -1537,7 +1120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 13 */
+/* 9 */
 /***/ (function(module, exports) {
 
 	/**
@@ -1555,7 +1138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 14 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -1568,9 +1151,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	if ((undefined) !== 'production') {
-	  var invariant = __webpack_require__(10);
-	  var warning = __webpack_require__(11);
-	  var ReactPropTypesSecret = __webpack_require__(13);
+	  var invariant = __webpack_require__(6);
+	  var warning = __webpack_require__(7);
+	  var ReactPropTypesSecret = __webpack_require__(9);
 	  var loggedTypeFailures = {};
 	}
 
@@ -1620,7 +1203,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 15 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -1632,9 +1215,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(9);
-	var invariant = __webpack_require__(10);
-	var ReactPropTypesSecret = __webpack_require__(13);
+	var emptyFunction = __webpack_require__(5);
+	var invariant = __webpack_require__(6);
+	var ReactPropTypesSecret = __webpack_require__(9);
 
 	module.exports = function() {
 	  function shim(props, propName, componentName, location, propFullName, secret) {
@@ -1682,6 +1265,427 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ReactPropTypes;
 	};
 
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_12__;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2015 Jed Watson.
+	  Based on code that is Copyright 2013-2015, Facebook, Inc.
+	  All rights reserved.
+	*/
+
+	(function () {
+		'use strict';
+
+		var canUseDOM = !!(
+			typeof window !== 'undefined' &&
+			window.document &&
+			window.document.createElement
+		);
+
+		var ExecutionEnvironment = {
+
+			canUseDOM: canUseDOM,
+
+			canUseWorkers: typeof Worker !== 'undefined',
+
+			canUseEventListeners:
+				canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+			canUseViewport: canUseDOM && !!window.screen
+
+		};
+
+		if (true) {
+			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return ExecutionEnvironment;
+			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else if (typeof module !== 'undefined' && module.exports) {
+			module.exports = ExecutionEnvironment;
+		} else {
+			window.ExecutionEnvironment = ExecutionEnvironment;
+		}
+
+	}());
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+	module.exports = function(opts) {
+	  return new ElementClass(opts)
+	}
+
+	function indexOf(arr, prop) {
+	  if (arr.indexOf) return arr.indexOf(prop)
+	  for (var i = 0, len = arr.length; i < len; i++)
+	    if (arr[i] === prop) return i
+	  return -1
+	}
+
+	function ElementClass(opts) {
+	  if (!(this instanceof ElementClass)) return new ElementClass(opts)
+	  var self = this
+	  if (!opts) opts = {}
+
+	  // similar doing instanceof HTMLElement but works in IE8
+	  if (opts.nodeType) opts = {el: opts}
+
+	  this.opts = opts
+	  this.el = opts.el || document.body
+	  if (typeof this.el !== 'object') this.el = document.querySelector(this.el)
+	}
+
+	ElementClass.prototype.add = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  if (el.className === "") return el.className = className
+	  var classes = el.className.split(' ')
+	  if (indexOf(classes, className) > -1) return classes
+	  classes.push(className)
+	  el.className = classes.join(' ')
+	  return classes
+	}
+
+	ElementClass.prototype.remove = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  if (el.className === "") return
+	  var classes = el.className.split(' ')
+	  var idx = indexOf(classes, className)
+	  if (idx > -1) classes.splice(idx, 1)
+	  el.className = classes.join(' ')
+	  return classes
+	}
+
+	ElementClass.prototype.has = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  var classes = el.className.split(' ')
+	  return indexOf(classes, className) > -1
+	}
+
+	ElementClass.prototype.toggle = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  if (this.has(className)) this.remove(className)
+	  else this.add(className)
+	}
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(3);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _lodash = __webpack_require__(16);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _scopeTab = __webpack_require__(17);
+
+	var _scopeTab2 = _interopRequireDefault(_scopeTab);
+
+	var _focusManager = __webpack_require__(19);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// so that our CSS is statically analyzable
+	var CLASS_NAMES = {
+	  overlay: {
+	    base: 'ReactModal__Overlay',
+	    afterOpen: 'ReactModal__Overlay--after-open',
+	    beforeClose: 'ReactModal__Overlay--before-close'
+	  },
+	  content: {
+	    base: 'ReactModal__Content',
+	    afterOpen: 'ReactModal__Content--after-open',
+	    beforeClose: 'ReactModal__Content--before-close'
+	  }
+	};
+
+	var ModalPortal = function (_Component) {
+	  _inherits(ModalPortal, _Component);
+
+	  _createClass(ModalPortal, null, [{
+	    key: 'afterClose',
+	    value: function afterClose() {
+	      (0, _focusManager.returnFocus)();
+	      (0, _focusManager.teardownScopedFocus)();
+	    }
+	  }]);
+
+	  function ModalPortal() {
+	    _classCallCheck(this, ModalPortal);
+
+	    var _this = _possibleConstructorReturn(this, (ModalPortal.__proto__ || Object.getPrototypeOf(ModalPortal)).call(this));
+
+	    _this.closeWithoutTimeout = function () {
+	      _this.setState({
+	        beforeClose: false,
+	        isOpen: false,
+	        afterOpen: false
+	      }, _this.afterClose);
+	    };
+
+	    _this.handleKeyDown = function (event) {
+	      if (event.keyCode === 9 /* tab*/) (0, _scopeTab2.default)(_this.content, event);
+	      if (event.keyCode === 27 /* esc*/) {
+	          event.preventDefault();
+	          _this.requestClose(event);
+	        }
+	    };
+
+	    _this.handleOverlayOnClick = function (event) {
+	      if (_this.shouldClose === null) {
+	        _this.shouldClose = true;
+	      }
+	      if (_this.shouldClose && _this.props.shouldCloseOnOverlayClick) {
+	        if (_this.ownerHandlesClose()) {
+	          _this.requestClose(event);
+	        } else {
+	          _this.focusContent();
+	        }
+	      }
+	      _this.shouldClose = null;
+	    };
+
+	    _this.handleContentOnClick = function () {
+	      _this.shouldClose = false;
+	    };
+
+	    _this.state = {
+	      afterOpen: false,
+	      beforeClose: false
+	    };
+	    _this.shouldClose = null;
+	    return _this;
+	  }
+
+	  _createClass(ModalPortal, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // Focus needs to be set when mounting and already open
+	      if (this.props.isOpen) {
+	        this.setFocusAfterRender(true);
+	        this.open();
+	      }
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {
+	      // Focus only needs to be set once when the modal is being opened
+	      if (!this.props.isOpen && newProps.isOpen) {
+	        this.setFocusAfterRender(true);
+	        this.open();
+	      } else if (this.props.isOpen && !newProps.isOpen) {
+	        this.close();
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      if (this.focusAfterRender) {
+	        this.focusContent();
+	        this.setFocusAfterRender(false);
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      clearTimeout(this.closeTimer);
+	    }
+	  }, {
+	    key: 'setFocusAfterRender',
+	    value: function setFocusAfterRender(focus) {
+	      this.focusAfterRender = focus;
+	    }
+	  }, {
+	    key: 'open',
+	    value: function open() {
+	      var _this2 = this;
+
+	      if (this.state.afterOpen && this.state.beforeClose) {
+	        clearTimeout(this.closeTimer);
+	        this.setState({ beforeClose: false });
+	      } else {
+	        (0, _focusManager.setupScopedFocus)(this.node);
+	        (0, _focusManager.markForFocusLater)();
+	        if (this.props.isOpen && this.props.onBeforeOpen) {
+	          this.props.onBeforeOpen();
+	        }
+	        this.setState({ isOpen: true }, function () {
+	          _this2.setState({ afterOpen: true });
+
+	          if (_this2.props.isOpen && _this2.props.onAfterOpen) {
+	            _this2.props.onAfterOpen();
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'close',
+	    value: function close() {
+	      if (this.props.closeTimeoutMS > 0) {
+	        this.closeWithTimeout();
+	      } else {
+	        this.closeWithoutTimeout();
+	      }
+	    }
+	  }, {
+	    key: 'focusContent',
+	    value: function focusContent() {
+	      // Don't steal focus from inner elements
+	      if (!this.contentHasFocus()) {
+	        this.content.focus();
+	      }
+	    }
+	  }, {
+	    key: 'closeWithTimeout',
+	    value: function closeWithTimeout() {
+	      var _this3 = this;
+
+	      this.setState({ beforeClose: true }, function () {
+	        _this3.closeTimer = setTimeout(_this3.closeWithoutTimeout, _this3.props.closeTimeoutMS);
+	      });
+	    }
+	  }, {
+	    key: 'requestClose',
+	    value: function requestClose(event) {
+	      if (this.ownerHandlesClose()) {
+	        this.props.onRequestClose(event);
+	      }
+	    }
+	  }, {
+	    key: 'ownerHandlesClose',
+	    value: function ownerHandlesClose() {
+	      return this.props.onRequestClose;
+	    }
+	  }, {
+	    key: 'shouldBeClosed',
+	    value: function shouldBeClosed() {
+	      return !this.props.isOpen && !this.state.beforeClose;
+	    }
+	  }, {
+	    key: 'contentHasFocus',
+	    value: function contentHasFocus() {
+	      return document.activeElement === this.content || this.content.contains(document.activeElement);
+	    }
+	  }, {
+	    key: 'buildClassName',
+	    value: function buildClassName(which, additional) {
+	      var className = CLASS_NAMES[which].base;
+	      if (this.state.afterOpen) {
+	        className += ' ' + CLASS_NAMES[which].afterOpen;
+	      }
+	      if (this.state.beforeClose) {
+	        className += ' ' + CLASS_NAMES[which].beforeClose;
+	      }
+	      return additional ? className + ' ' + additional : className;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this4 = this;
+
+	      var contentStyles = this.props.className ? {} : this.props.defaultStyles.content;
+	      var overlayStyles = this.props.overlayClassName ? {} : this.props.defaultStyles.overlay;
+
+	      // Disabling this rule is okay, since we know what is going on here, that being said
+	      // longterm we should probably do this better.
+	      /* eslint-disable jsx-a11y/no-static-element-interactions */
+	      return this.shouldBeClosed() ? _react2.default.createElement('div', null) : _react2.default.createElement(
+	        'div',
+	        {
+	          ref: function ref(c) {
+	            _this4.overlay = c;
+	          },
+	          className: this.buildClassName('overlay', this.props.overlayClassName),
+	          style: (0, _lodash2.default)({}, overlayStyles, this.props.style.overlay || {}),
+	          onClick: this.handleOverlayOnClick
+	        },
+	        _react2.default.createElement(
+	          'div',
+	          {
+	            ref: function ref(c) {
+	              _this4.content = c;
+	            },
+	            style: (0, _lodash2.default)({}, contentStyles, this.props.style.content || {}),
+	            className: this.buildClassName('content', this.props.className),
+	            tabIndex: -1,
+	            onKeyDown: this.handleKeyDown,
+	            onClick: this.handleContentOnClick,
+	            role: this.props.role,
+	            'aria-label': this.props.contentLabel
+	          },
+	          this.props.children
+	        )
+	      );
+	      /* eslint-enable jsx-a11y/no-static-element-interactions */
+	    }
+	  }]);
+
+	  return ModalPortal;
+	}(_react.Component);
+
+	ModalPortal.propTypes = {
+	  isOpen: _propTypes2.default.bool.isRequired,
+	  onBeforeOpen: _propTypes2.default.func,
+	  onAfterOpen: _propTypes2.default.func,
+	  closeTimeoutMS: _propTypes2.default.number,
+	  shouldCloseOnOverlayClick: _propTypes2.default.bool,
+	  onRequestClose: _propTypes2.default.func,
+	  className: _propTypes2.default.string,
+	  overlayClassName: _propTypes2.default.string,
+	  defaultStyles: _propTypes2.default.shape({
+	    content: _propTypes2.default.object,
+	    overlay: _propTypes2.default.object
+	  }),
+	  style: _propTypes2.default.shape({
+	    content: _propTypes2.default.object,
+	    overlay: _propTypes2.default.object
+	  }),
+	  role: _propTypes2.default.string,
+	  children: _propTypes2.default.node,
+	  contentLabel: _propTypes2.default.string
+	};
+	ModalPortal.defaultProps = {
+	  style: {
+	    overlay: {},
+	    content: {}
+	  }
+	};
+	exports.default = ModalPortal;
 
 /***/ }),
 /* 16 */
